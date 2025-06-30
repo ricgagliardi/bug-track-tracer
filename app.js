@@ -39,7 +39,8 @@ function requireLogin() {
 
 async function loadBugs() {
   const res = await apiQuery('SELECT * FROM buglist');
-  bugs = res.rows || [];
+  const data = res.data || [];
+  bugs = data.map(row => ({ ...row, id: row.bug_id }));
 }
 
 function renderTable(filter = {}, sort = null, order = 'asc') {
@@ -134,7 +135,7 @@ function openForm(bug) {
 
 async function saveBug(rec) {
   if (rec.id) {
-    const sql = `UPDATE buglist SET bug_name='${rec.bug_name}', platform='${rec.platform}', feature='${rec.feature}', description='${rec.description}', by='${rec.by}', severity='${rec.severity}', status='${rec.status}', notes='${rec.notes}' WHERE id=${rec.id}`;
+    const sql = `UPDATE buglist SET bug_name='${rec.bug_name}', platform='${rec.platform}', feature='${rec.feature}', description='${rec.description}', by='${rec.by}', severity='${rec.severity}', status='${rec.status}', notes='${rec.notes}' WHERE bug_id=${rec.id}`;
     await apiQuery(sql);
   } else {
     const sql = `INSERT INTO buglist (bug_name,platform,feature,description,by,severity,status,notes) VALUES ('${rec.bug_name}','${rec.platform}','${rec.feature}','${rec.description}','${rec.by}','${rec.severity}','${rec.status}','${rec.notes}')`;
