@@ -1,15 +1,11 @@
 # Bug Track Tracer
 
-This is a simple bug tracking web application designed for Deno Deploy. It stores bug records in Deno KV and uses a passcode-based login system.
+This is a simple Jamstack bug tracking app. All data is stored in SQLiteCloud and accessed via the Weblite REST API. Authentication is a passcode-based login.
 
 ## Running Locally
 
-```
-PASSCODES="Denver, Oakland, Seattle" deno run -A main.ts
-```
+Open `index.html` in a browser. The default passcodes are `Denver`, `Oakland`, and `Seattle`. You can change them by editing `app.js`.
 
-Open `http://localhost:8000` in a browser and log in using one of the passcodes.
+## Deployment
 
-## Deploying to Deno Deploy
-
-Upload `main.ts` to Deno Deploy and configure an environment variable `PASSCODES` with a comma-delimited list of valid passcodes.
+Host the static files (`index.html` and `app.js`) on any static site provider. The app communicates directly with SQLiteCloud, so no server code is required.
